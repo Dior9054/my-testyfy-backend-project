@@ -3,19 +3,14 @@ import express from "express"
 import multer from "multer"
 import mongoose from "mongoose"
 import { registerValidation, loginValidation, postCreateValidation } from "./validations.js"
-// import { validationResult } from "express-validator"
-// import UserModal from "./models/Users.js"
-// import bcrypt from "bcrypt"
-// import jwt from "jsonwebtoken"
 import checkAuth from "./utils/checkAuth.js"
-// import { register } from "module"
-// import { register, login, getMe } from './controllers/UserController.js'
 import * as UserController from "./controllers/UserController.js"
 import * as PostController from "./controllers/PostControllers.js"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
 import cors from "cors"
 
-mongoose.connect("mongodb+srv://admin:wwww@cluster0.lxa064x.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0")
+// mongoose.connect("mongodb+srv://admin:wwww@cluster0.lxa064x.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.EMAIL_PORT)
 
 const app = express()
 
@@ -51,7 +46,7 @@ app.delete("/posts/:id", checkAuth, PostController.remove)
 app.patch("/posts/:id", checkAuth, postCreateValidation, handleValidationErrors, PostController.update)
 
 
-app.listen(200, () => {
+app.listen(process.env.PORT || 200, () => {
     console.log("ok");
 })
 
